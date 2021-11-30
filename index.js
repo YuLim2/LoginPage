@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 const bodyParser = require('body-parser'); //body-parser 불러오기
+
+const config = require("./config/key");
+
 const { User } = require("./models/User"); //user 모델 불러오기
 
 //application/x-ww-form-urlencoded 분석해서 가져옴
@@ -12,12 +15,12 @@ app.use(bodyParser.json());
 
 
 const mongoose = require('mongoose')
-mongoose.connect(`mongodb+srv://YuLim2:sun138814%21@firstcluster.qtt7c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, ).then(() => console.log('MongoDB Connected...'))
+mongoose.connect(config.mongoURI, ).then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err))
 
 
 app.get('/', (req, res) => {
-    res.send('하이!')
+    res.send('하이!_수정사항')
 })
 
 app.post('/register', (req, res) => { //client에서 user 정보 가져오고 db에 저장

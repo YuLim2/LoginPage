@@ -33,4 +33,4 @@ const userSchema = monggose.Schema({
 
 const User = monggose.model('User', userSchema) //스키마를 모델로 감싸기
 
-module.exports = { User } //다른 파일에서도 쓸 수 있도록 export
+module.exports = { User } //다른 파일에서도 쓸 수 있도록 export; 수출

@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     res.send('하이!_수정사항')
 })
 
-app.post('/register', (req, res) => { //client에서 user 정보 가져오고 db에 저장
+app.post('/register', (req, res) => { // client에서 user 정보 가져오고 db에 저장
     const user = new User(req.body)
 
     user.save((err, userInfo) => {

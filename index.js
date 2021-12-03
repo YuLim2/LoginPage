@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 
 const mongoose = require('mongoose')
-mongoose.connect(config.mongoURL) // db 연결
+mongoose.connect(config.mongoURL) // db 연결 
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 

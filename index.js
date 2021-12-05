@@ -23,6 +23,10 @@ app.get('/', (req, res) => { // root일 때
     res.send('하이!_수정사항 ')
 })
 
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
+
 
 const { User } = require("./models/User"); // user 모델 불러오기
 
@@ -35,6 +39,23 @@ app.post('/register', (req, res) => { // client에서 user 정보 가져오고 d
     })
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.post('/login', (req, res) => {
+    User.findOne({ email: req.body.email }, (err, user) => { // 요청된 이메일이 db에 있는가
+        if (!user) {
+            return res.json({
+                loginSuccess: false,
+                message: "해당하는 유저가 없음"
+            })
+        }
+        user.comparePassword(req.body.password, (err, isMatch) => { // 해당 password가 일치한가
+            if (!isMatch)
+                return res.json({
+                    loginSuccess: false,
+                    message: "비밀번호가 틀림"
+                })
+            user.generateToken((err, user) => {
+
+            })
+        })
+    })
 })

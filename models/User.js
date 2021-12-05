@@ -37,7 +37,7 @@ const userSchema = monggose.Schema({
 userSchema.pre('save', function(next) { // 저장 전에 password 암호화
     var user = this;
 
-    if (use.isModified('password')) { // password가 반환될 때만
+    if (user.isModified('password')) { // password가 반환될 때만
 
         bcrypt.genSalt(saltRounds, function(err, salt) { // saltRounds를 사용하여 salt 생성
             if (err) return next(err) // err 시 바로 next
@@ -48,8 +48,17 @@ userSchema.pre('save', function(next) { // 저장 전에 password 암호화
                 next()
             })
         })
+    } else {
+        next()
     }
 })
+
+userSchema.method.comparePassword = function(plainPassword, cb) { //비밀번호가 맞는지 확인
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) { //쓰여진 암호를 또 암호화 하여 비교
+        if (err) return cb(err)
+        cb(null, isMatch)
+    })
+}
 
 const User = monggose.model('User', userSchema) //스키마를 모델로 감싸기
 
